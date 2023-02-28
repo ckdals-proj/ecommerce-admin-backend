@@ -1,4 +1,4 @@
-from app.models.base_class import Base
+from app.models.base import Base
 from app.models.mixin import TimestampMixin, DeleteMixin
 
 from sqlalchemy import Column, Integer, String

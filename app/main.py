@@ -1,14 +1,8 @@
 from fastapi import FastAPI, Depends
-from app.controller import admin
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
-
-app.include_router(
-    admin.router,
-    prefix="/admin",
-    tags=["admin"],
-)
+from app.controllers.module import routers
+from app.container import Container
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -20,10 +14,25 @@ origins = [
     "http://127.0.0.1:3000",
 ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+def create_app() -> FastAPI:
+    container = Container()
+    container.wire(packages=["app.controllers"])
+
+    app = FastAPI()
+
+    for router in routers: 
+        app.include_router(router, prefix='/api/v1')
+
+    # app.include_router(category.router)
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    return app
+
+
+app =  create_app()
