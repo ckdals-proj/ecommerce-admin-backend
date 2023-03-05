@@ -14,6 +14,8 @@ sqlalchemy = "^2.0.4"
 pymysql = "^1.0.2"
 dependency-injector = "^4.41.0"
 alembic = "^1.9.4"
+hackle-sdk = "^3.3.0"
+slack-sdk = "^3.20.0"
 
 
 [tool.poetry.group.dev.dependencies]

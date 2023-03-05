@@ -10,6 +10,8 @@ from app.repositories.module import (
 
 from app.db.database import DataBase
 
+from app.utils.module import HackleClient
+
 import os
 
 
@@ -29,4 +31,8 @@ class Container(containers.DeclarativeContainer):
     category_service = providers.Singleton(
         CategoryService,
         category_repository=category_repository
+    )
+
+    hackle_client_util = providers.Singleton(
+        HackleClient
     )

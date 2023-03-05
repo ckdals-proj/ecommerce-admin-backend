@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.controllers.module import routers
 from app.container import Container
 
+from app.middlewares.module import TimeHeaderMiddleware
+
 origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
@@ -23,8 +25,9 @@ def create_app() -> FastAPI:
     for router in routers: 
         app.include_router(router, prefix='/api/v1')
 
-    # app.include_router(category.router)
-
+    app.add_middleware(
+        TimeHeaderMiddleware, not_allowed_api_list=['/docs']
+    )
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
